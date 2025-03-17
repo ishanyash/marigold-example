@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Workflow Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .header {
+            background-color: #4c12a1;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .prompt-card {
+            background-color: #f8f0ff;
+        }
+        .response-card {
+            background-color: #f0f8ff;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .workflow-step {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .step-number {
+            background-color: #4c12a1;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <h1>Prompt Engineering Workflow Demonstration</h1>
+            <p>A walkthrough of the email marketing assistant's prompt engineering process</p>
+        </div>
+        
+        <div class="workflow-overview mb-5">
+            <h2 class="mb-4">Prompt Engineering Workflow Overview</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card text-center p-3">
+                        <h4>1. Prompt Design</h4>
+                        <p>Creating structured, purposeful prompts with clear instructions</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center p-3">
+                        <h4>2. Chain Orchestration</h4>
+                        <p>Connecting prompts in a sequential workflow</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center p-3">
+                        <h4>3. Response Evaluation</h4>
+                        <p>Assessing output quality against key metrics</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center p-3">
+                        <h4>4. Prompt Refinement</h4>
+                        <p>Iterative improvement based on performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 1: Customer Analysis -->
+        <div class="workflow-step">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3>Customer Analysis Stage</h3>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card prompt-card">
+                        <div class="card-header">
+                            <h4>Analysis Prompt Template</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>You are an Expert Email Marketing Assistant for Octopus Energy.
+
+## TASK: ANALYZE CUSTOMER DATA FOR EMAIL PERSONALIZATION
+
+You'll be provided with customer data for an Octopus Energy user. Analyze this data to identify 
+key insights that would help personalize a marketing email.
+
+### CUSTOMER INFORMATION:
+- Name: {customer_name}
+- Current Tariff: {tariff_type}
+- Monthly Energy Usage: {energy_usage} kWh
+- Location: {location}
+- Peak Usage Time: {peak_usage_time}
+- Customer History: {customer_history}
+
+### ANALYSIS INSTRUCTIONS:
+1. Identify usage patterns that might indicate potential savings opportunities
+2. Determine which Octopus Energy plans might best suit this customer
+3. Consider seasonal factors based on location and time of year
+4. Analyze peak usage times to identify potential smart-meter benefits
+5. Review customer history to personalize messaging
+
+### OUTPUT GUIDELINES:
+- Provide 3-5 key insights about this customer
+- Suggest specific messaging angles that would resonate with this customer
+- Recommend specific features to highlight based on their usage patterns
+- Identify any potential pain points this customer might have
+- Suggest tone and approach based on their profile
+
+Your analysis should be structured, evidence-based, and focused on actionable insights.</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card response-card">
+                        <div class="card-header">
+                            <h4>LLM Response (Analysis Output)</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>Based on the customer data analysis, here are the key insights:
+
+1. This customer has higher than average energy usage during evening hours (7pm-11pm), suggesting they might benefit from an Economy 7 tariff or time-of-use optimization.
+
+2. Their location in London indicates they're in an area with high adoption of smart home technology and environmental consciousness.
+
+3. Their current Standard Variable tariff is not optimized for their usage patterns, which show consistency month-to-month.
+
+4. Given their energy consumption and current tariff, there's potential for 12-15% savings by switching to the GreenFlex plan.
+
+5. Customer history shows interest in renewable energy options but concern about initial costs - messaging should emphasize immediate savings alongside environmental benefits.
+
+Recommended messaging angles:
+- Focus on immediate cost savings with specific numbers
+- Highlight the simplicity of switching plans
+- Emphasize smart energy management through the app
+- Include specific environmental impact metrics (e.g., carbon reduction)
+
+Suggested tone: Data-driven but friendly, emphasizing both practical benefits and environmental impact.</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Prompt Design Principles for Analysis Stage</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Clear Role Definition:</strong> Establishes the AI as an expert marketing assistant</li>
+                                <li><strong>Structured Input Format:</strong> Organizes customer data in a standardized way</li>
+                                <li><strong>Step-by-Step Instructions:</strong> Breaks down the analysis process</li>
+                                <li><strong>Output Guidelines:</strong> Specifies exactly what insights are needed</li>
+                                <li><strong>Reasoning Framework:</strong> Guides the model to consider multiple factors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 2: Email Generation -->
+        <div class="workflow-step">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3>Email Draft Generation Stage</h3>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card prompt-card">
+                        <div class="card-header">
+                            <h4>Email Generation Prompt Template</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>You are an Expert Email Marketing Assistant for Octopus Energy with a friendly, conversational, and accessible tone.
+
+## TASK: GENERATE PERSONALIZED MARKETING EMAIL
+
+Using the customer insights provided, create a persuasive marketing email for an Octopus Energy customer.
+
+### CUSTOMER PROFILE:
+- Name: {customer_name}
+- Current Tariff: {tariff_type}
+- Monthly Energy Usage: {energy_usage} kWh
+- Location: {location}
+- Peak Usage Time: {peak_usage_time}
+- Potential Savings: {potential_savings}%
+- Recommended Plan: {recommended_plan}
+
+### CUSTOMER INSIGHTS:
+{customer_insights}
+
+### EMAIL REQUIREMENTS:
+1. Subject Line: Create an attention-grabbing, personalized subject line
+2. Introduction: Greet the customer warmly and establish relevance
+3. Value Proposition: Highlight specific benefits of the recommended plan
+4. Personalization: Reference their specific usage patterns and potential savings
+5. Environmental Impact: Include information about renewable energy benefits
+6. Call-to-Action: Clear, compelling CTA with a sense of reasonable urgency
+7. Closing: Friendly sign-off that reinforces the Octopus Energy brand
+
+### FORMAT CONSTRAINTS:
+- Total length: 100-150 words
+- Subject line: Maximum 60 characters
+- Paragraphs: Short and scannable (2-3 sentences each)
+- Include one bulleted list of benefits (3-4 items)
+
+### OUTPUT FORMAT:
+Subject: [Your subject line]
+
+[Email body with appropriate paragraphs, formatting and a single CTA]</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card response-card">
+                        <div class="card-header">
+                            <h4>LLM Response (Email Draft)</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>Subject: Alex, Save 15% on Your Energy Bills with Our GreenFlex Plan
+
+Hi Alex,
+
+We've been looking at your energy usage on your Standard Variable tariff (around 350 kWh monthly), and noticed something interesting: you're using most energy during evening hours.
+
+Great news! By switching to our GreenFlex plan, you could save approximately 15% on your monthly bills while supporting renewable energy. Based on your usage patterns, this could mean about £180 in savings over the next year.
+
+Why GreenFlex makes sense for you:
+- Smart time-of-use rates that match your evening usage pattern
+- 100% renewable electricity at competitive rates
+- Easy energy tracking through our top-rated app
+- No exit fees or long-term commitments
+
+It takes just 2 minutes to switch online, and we'll handle everything else.
+
+[Check Your Personalized Savings]
+
+Warmly,
+The Octopus Energy Team</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Prompt Design Principles for Generation Stage</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Context Incorporation:</strong> Uses insights from previous step as input</li>
+                                <li><strong>Detailed Structure:</strong> Outlines specific sections the email should contain</li>
+                                <li><strong>Format Constraints:</strong> Sets clear boundaries for length and style</li>
+                                <li><strong>Personalization Focus:</strong> Emphasizes the need to reference customer-specific data</li>
+                                <li><strong>Output Template:</strong> Provides exact format for the response</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 3: Email Refinement -->
+        <div class="workflow-step">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3>Email Refinement Stage</h3>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card prompt-card">
+                        <div class="card-header">
+                            <h4>Email Refinement Prompt Template</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>You are an Expert Email Marketing Assistant for Octopus Energy with years of experience in crafting engaging, persuasive energy-focused emails.
+
+## TASK: OPTIMIZE AND REFINE MARKETING EMAIL
+
+You'll be given a draft email for an Octopus Energy customer. Your job is to refine and optimize
+this email to maximize engagement, clarity, and conversion potential.
+
+### CUSTOMER INFORMATION:
+- Name: {customer_name}
+- Current Tariff: {tariff_type}
+
+### DRAFT EMAIL:
+{email_draft}
+
+### REFINEMENT INSTRUCTIONS:
+1. Improve subject line for higher open rates (be specific, create curiosity, add urgency)
+2. Enhance personalization throughout the email
+3. Tighten language and remove any unnecessary words
+4. Strengthen the call-to-action
+5. Ensure tone is friendly and aligned with Octopus Energy's brand voice
+6. Check for and fix any awkward phrasing or unclear messaging
+7. Add any missing key benefits that would appeal to this specific customer
+8. Ensure total word count stays between 100-150 words
+
+### OPTIMIZATION FOCUS AREAS:
+- Clarity: Is the offer and its value immediately clear?
+- Personalization: Does it feel specifically written for this customer?
+- Persuasiveness: Are benefits framed effectively to drive action?
+- Tone: Is it friendly, helpful, and non-pushy?
+- Actionability: Is the CTA clear and compelling?
+
+Provide the completely refined email, ready to send.</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card response-card">
+                        <div class="card-header">
+                            <h4>LLM Response (Refined Email)</h4>
+                        </div>
+                        <div class="card-body">
+                            <pre>Subject: Alex, Cut Your Evening Energy Costs by 15% This Month
+
+Hi Alex,
+
+Looking at your recent energy usage, I noticed you're using most power during evenings on your Standard Variable tariff. This presents a perfect opportunity!
+
+Switch to our GreenFlex plan and save 15% on your monthly bills – that's around £180 over the next year based on your 350 kWh monthly usage. Plus, you'll be powering your home with 100% renewable electricity.
+
+Perfect for your lifestyle:
+- Lower rates during your actual usage hours
+- Real-time consumption tracking in our simple app
+- 100% green energy without the premium price
+- No contract lock-in – flexibility guaranteed
+
+Take 2 minutes to switch now and start saving immediately.
+
+[See Your Exact Savings]
+
+The Octopus Energy Team</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Prompt Design Principles for Refinement Stage</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Critical Evaluation:</strong> Guides the model to critically assess the draft</li>
+                                <li><strong>Specific Improvement Areas:</strong> Identifies exact aspects to enhance</li>
+                                <li><strong>Quality Criteria:</strong> Establishes clear metrics for success</li>
+                                <li><strong>Brand Alignment:</strong> Emphasizes adherence to brand voice</li>
+                                <li><strong>Constraint Reinforcement:</strong> Reminds about word count and format requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 4: Evaluation -->
+        <div class="workflow-step">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3>Output Evaluation Framework</h3>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Evaluation Criteria</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>Content Quality</h5>
+                                    <ul>
+                                        <li>Clarity: 9/10</li>
+                                        <li>Conciseness: 8/10</li>
+                                        <li>Grammar: 10/10</li>
+                                        <li>Persuasiveness: 9/10</li>
+                                        <li>Readability: 9/10</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Brand Alignment</h5>
+                                    <ul>
+                                        <li>Tone Alignment: 9/10</li>
+                                        <li>Language Clarity: 8/10</li>
+                                        <li>Brand Personality: 8/10</li>
+                                        <li>Distinctiveness: 7/10</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>Personalization</h5>
+                                    <ul>
+                                        <li>Name Usage: 9/10</li>
+                                        <li>Tariff Relevance: 10/10</li>
+                                        <li>Specific Needs: 9/10</li>
+                                        <li>Tailored Benefits: 8/10</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>CTA Effectiveness</h5>
+                                    <ul>
+                                        <li>Clarity: 9/10</li>
+                                        <li>Prominence: 8/10</li>
+                                        <li>Persuasiveness: 8/10</li>
+                                        <li>Urgency: 7/10</li>
+                                        <li>Value Proposition: 9/10</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Aggregate Scores</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Overall Score: 8.7/10</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Engagement Score: 8.5/10</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Conversion Potential: 8.8/10</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Brand Alignment: 8.5/10</h5>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Evaluation Insights</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Strengths:</strong> Strong personalization, clear value proposition, effective use of customer data</li>
+                                <li><strong>Areas for Improvement:</strong> Could add more urgency, strengthen brand distinctiveness</li>
+                                <li><strong>Prompt Refinement Opportunities:</strong> Enhance instructions for brand voice, add examples of urgency techniques</li>
+                                <li><strong>Model Performance:</strong> This output demonstrates effective completion of the multi-stage workflow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer with navigation -->
+        <div class="row mt-5 mb-5">
+            <div class="col text-center">
+                <a href="/" class="btn btn-primary">Return to Main Application</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

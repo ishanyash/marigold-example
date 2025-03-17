@@ -1,0 +1,237 @@
+# templates/index.html
+
+{% extends "base.html" %}
+
+{% block title %}Octopus Energy Email Generator{% endblock %}
+
+{% block additional_styles %}
+.customer-form {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.email-preview {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    white-space: pre-line;
+}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="customer-form">
+            <h3>Customer Details</h3>
+            <form id="customerForm">
+                <div class="mb-3">
+                    <label for="customerName" class="form-label">Customer Name</label>
+                    <input type="text" class="form-control" id="customerName" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="tariffType" class="form-label">Current Tariff</label>
+                            <select class="form-control" id="tariffType" required>
+                                <option value="Standard Variable">Standard Variable</option>
+                                <option value="Fixed Rate">Fixed Rate</option>
+                                <option value="Economy 7">Economy 7</option>
+                                <option value="Green Energy">Green Energy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="energyUsage" class="form-label">Monthly Energy Usage (kWh)</label>
+                            <input type="number" class="form-control" id="energyUsage" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="peakUsageTime" class="form-label">Peak Usage Time</label>
+                            <select class="form-control" id="peakUsageTime">
+                                <option value="Morning">Morning</option>
+                                <option value="Afternoon">Afternoon</option>
+                                <option value="Evening">Evening</option>
+                                <option value="Night">Night</option>
+                                <option value="Morning and Evening">Morning and Evening</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="potentialSavings" class="form-label">Potential Savings (%)</label>
+                            <input type="number" class="form-control" id="potentialSavings" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="recommendedPlan" class="form-label">Recommended Plan</label>
+                            <select class="form-control" id="recommendedPlan" required>
+                                <option value="Agile Octopus">Agile Octopus</option>
+                                <option value="Super Green Octopus">Super Green Octopus</option>
+                                <option value="Octopus Go">Octopus Go</option>
+                                <option value="GreenFlex">GreenFlex</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="customerHistory" class="form-label">Customer History (optional)</label>
+                    <textarea class="form-control" id="customerHistory" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Generate Email</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="email-preview">
+            <h3>Generated Email</h3>
+            <div id="loadingIndicator" class="text-center d-none">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Generating personalized email...</p>
+            </div>
+            <div id="emailResult">
+                <p class="text-muted">Fill out the customer details and click "Generate Email" to create a personalized marketing campaign.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const customerForm = document.getElementById('customerForm');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const emailResult = document.getElementById('emailResult');
+        
+        // Helper function to estimate savings if not provided
+        function estimateSavings() {
+            const tariff = document.getElementById('tariffType').value;
+            const usage = parseInt(document.getElementById('energyUsage').value);
+            const savingsField = document.getElementById('potentialSavings');
+            
+            if (!savingsField.value) {
+                if (tariff === "Standard Variable") {
+                    savingsField.value = usage > 300 ? "15" : "12";
+                } else if (tariff === "Fixed Rate") {
+                    savingsField.value = "10";
+                } else if (tariff === "Economy 7") {
+                    savingsField.value = "14";
+                } else {
+                    savingsField.value = "8";
+                }
+            }
+        }
+        
+        // Helper function to recommend a plan if not selected
+        function recommendPlan() {
+            const tariff = document.getElementById('tariffType').value;
+            const usage = parseInt(document.getElementById('energyUsage').value);
+            const peakTime = document.getElementById('peakUsageTime').value;
+            const planField = document.getElementById('recommendedPlan');
+            
+            if (planField.selectedIndex === 0) {
+                if (peakTime === "Evening" || peakTime === "Night") {
+                    planField.value = "Octopus Go";
+                } else if (usage > 400) {
+                    planField.value = "Super Green Octopus";
+                } else if (tariff === "Standard Variable") {
+                    planField.value = "GreenFlex";
+                } else {
+                    planField.value = "Agile Octopus";
+                }
+            }
+        }
+        
+        // Auto-estimate values when energy usage is entered
+        document.getElementById('energyUsage').addEventListener('change', function() {
+            estimateSavings();
+            recommendPlan();
+        });
+        
+        customerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            loadingIndicator.classList.remove('d-none');
+            emailResult.innerHTML = '';
+            
+            // Auto-estimate values if not provided
+            estimateSavings();
+            recommendPlan();
+            
+            // Collect form data
+            const customerData = {
+                customer_id: "WEB" + Math.floor(Math.random() * 10000),
+                name: document.getElementById('customerName').value,
+                tariff_type: document.getElementById('tariffType').value,
+                energy_usage: parseInt(document.getElementById('energyUsage').value),
+                potential_savings: parseInt(document.getElementById('potentialSavings').value),
+                recommended_plan: document.getElementById('recommendedPlan').value,
+                location: document.getElementById('location').value,
+                peak_usage_time: document.getElementById('peakUsageTime').value,
+                history_summary: document.getElementById('customerHistory').value
+            };
+            
+            // Send API request
+            fetch('/api/generate-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading indicator
+                loadingIndicator.classList.add('d-none');
+                
+                // Display results
+                if (data.error) {
+                    emailResult.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                } else {
+                    emailResult.innerHTML = `
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <strong>Subject:</strong> ${data.email_subject}
+                            </div>
+                            <div class="card-body">
+                                ${data.email_body.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Customer Insights</strong>
+                            </div>
+                            <div class="card-body">
+                                ${data.customer_insights.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                loadingIndicator.classList.add('d-none');
+                emailResult.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            });
+        });
+    });
+</script>
+{% endblock %}
