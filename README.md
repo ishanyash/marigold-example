@@ -4,8 +4,8 @@
 
 A demonstration project showcasing a prompt engineering approach for creating personalized marketing emails using LangChain and LLMs.
 
-![Email Generation Workflow](
-    graph TD
+```mermaid
+graph TD
     A[Customer Profile Data] --> B[Stage 1: Analysis]
     B --> C[Customer Insights]
     C --> D[Stage 2: Email Generation]
@@ -27,7 +27,8 @@ A demonstration project showcasing a prompt engineering approach for creating pe
     
     style B fill:#4c12a1,color:white
     style D fill:#4c12a1,color:white
-    style F fill:#4c12a1,color:white)
+    style F fill:#4c12a1,color:white
+```
 
 ## Project Goals
 
@@ -85,47 +86,12 @@ This modular approach provides several advantages:
 - The system can trace and evaluate performance at each step
 - Complex reasoning is broken into manageable chunks for the LLM
 
-## Model Evaluation Framework
-
-I developed a comprehensive evaluation framework to assess LLM performance:
-
-![Model Comparison](https://raw.githubusercontent.com/username/octopus-email-assistant/main/static/model_comparison.png)
-
-The evaluation system assesses email outputs along four key dimensions:
-- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, readability
-- **Brand Alignment**: Tone, language clarity, brand personality, distinctiveness
-- **Personalization**: Name usage, tariff relevance, specific needs, tailored benefits
-- **CTA Effectiveness**: Clarity, prominence, persuasiveness, urgency, value proposition
-
-These dimensions are combined into aggregate metrics:
-- **Engagement Score**: How likely the email is to be read and engaged with
-- **Conversion Potential**: How effectively it drives action
-- **Brand Alignment Score**: How well it matches Octopus Energy's voice
-- **Overall Score**: Weighted combination of all metrics
-
-```python
-def calculate_overall_score(evaluation_results):
-    """Calculate an overall quality score based on multiple dimensions"""
-    engagement_score = evaluation_results.get("engagement_score", 5.0)
-    conversion_potential = evaluation_results.get("conversion_potential", 5.0)
-    brand_alignment_score = evaluation_results.get("brand_alignment_score", 5.0)
-    
-    # Weighted score calculation
-    overall_score = (
-        engagement_score * 0.3 +
-        conversion_potential * 0.4 +
-        brand_alignment_score * 0.3
-    )
-    
-    return round(overall_score, 1)
-```
-
 ## Prompt Curation Methodology
 
 My prompt development process followed a systematic approach:
 
-![Prompt Engineering Workflow](
-    graph TD
+```mermaid
+graph TD
     A[Research Brand Voice] --> B[Design Initial Prompts]
     B --> C[Create Prompt Variations]
     C --> D[Test on Sample Data]
@@ -143,7 +109,7 @@ My prompt development process followed a systematic approach:
     style E fill:#4c12a1,color:white
     style G fill:#4c12a1,color:white
     style I fill:#4c12a1,color:white
-)
+```
 
 ### 1. System Prompts as Foundation
 I started with carefully crafted system prompts that:
@@ -165,6 +131,39 @@ Each task has a dedicated prompt template with:
 - Step-by-step process guidelines
 - Concrete output requirements
 - Constraints and quality standards
+
+Here's an example of my structured prompt for the analysis stage:
+
+```
+## TASK: ANALYZE CUSTOMER DATA FOR EMAIL PERSONALIZATION
+
+You'll be provided with customer data for an Octopus Energy user. Analyze this data to identify 
+key insights that would help personalize a marketing email.
+
+### CUSTOMER INFORMATION:
+- Name: {customer_name}
+- Current Tariff: {tariff_type}
+- Monthly Energy Usage: {energy_usage} kWh
+- Location: {location}
+- Peak Usage Time: {peak_usage_time}
+- Customer History: {customer_history}
+
+### ANALYSIS INSTRUCTIONS:
+1. Identify usage patterns that might indicate potential savings opportunities
+2. Determine which Octopus Energy plans might best suit this customer
+3. Consider seasonal factors based on location and time of year
+4. Analyze peak usage times to identify potential smart-meter benefits
+5. Review customer history to personalize messaging (long-time customer vs. new user)
+
+### OUTPUT GUIDELINES:
+- Provide 3-5 key insights about this customer
+- Suggest specific messaging angles that would resonate with this customer
+- Recommend specific features to highlight based on their usage patterns
+- Identify any potential pain points this customer might have with their current plan
+- Suggest tone and approach based on their profile (e.g., data-driven, cost-conscious, eco-minded)
+
+Your analysis should be structured, evidence-based, and focused on actionable insights for email personalization.
+```
 
 ### 3. Prompt Versioning
 I implemented multiple versions of each prompt to enable systematic testing:
@@ -214,6 +213,135 @@ SUBJECT_LINE_VARIANTS = {
     "urgency_based": "Last Chance: Switch & Save {potential_savings}% Before Prices Change",
     "benefit_focused": "More Control, Lower Bills: A Special Offer for {customer_name}"
 }
+```
+
+## Model Evaluation Framework
+
+I developed a comprehensive evaluation framework to assess LLM performance:
+
+<div align="center">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa" />
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">
+    LLM Performance Comparison for Email Generation
+  </text>
+  
+  <!-- Y-axis -->
+  <line x1="100" y1="80" x2="100" y2="400" stroke="black" stroke-width="2" />
+  <text x="50" y="240" font-family="Arial" font-size="16" text-anchor="middle" transform="rotate(-90, 50, 240)">
+    Score (0-10)
+  </text>
+  
+  <!-- Y-axis labels -->
+  <text x="90" y="400" font-family="Arial" font-size="14" text-anchor="end">0</text>
+  <text x="90" y="336" font-family="Arial" font-size="14" text-anchor="end">2</text>
+  <text x="90" y="272" font-family="Arial" font-size="14" text-anchor="end">4</text>
+  <text x="90" y="208" font-family="Arial" font-size="14" text-anchor="end">6</text>
+  <text x="90" y="144" font-family="Arial" font-size="14" text-anchor="end">8</text>
+  <text x="90" y="80" font-family="Arial" font-size="14" text-anchor="end">10</text>
+  
+  <!-- Horizontal grid lines -->
+  <line x1="100" y1="400" x2="750" y2="400" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  <line x1="100" y1="336" x2="750" y2="336" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  <line x1="100" y1="272" x2="750" y2="272" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  <line x1="100" y1="208" x2="750" y2="208" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  <line x1="100" y1="144" x2="750" y2="144" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  <line x1="100" y1="80" x2="750" y2="80" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
+  
+  <!-- X-axis -->
+  <line x1="100" y1="400" x2="750" y2="400" stroke="black" stroke-width="2" />
+  <text x="425" y="440" font-family="Arial" font-size="16" text-anchor="middle">
+    Model
+  </text>
+  
+  <!-- X-axis labels (models) -->
+  <text x="175" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-gpt-4</text>
+  <text x="325" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-gpt-3.5</text>
+  <text x="475" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-claude-3</text>
+  <text x="625" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-bedrock</text>
+  
+  <!-- Bars for Overall Score -->
+  <rect x="140" y="116" width="40" height="284" fill="#001F3F" />
+  <rect x="290" y="148" width="40" height="252" fill="#001F3F" />
+  <rect x="440" y="124" width="40" height="276" fill="#001F3F" />
+  <rect x="590" y="172" width="40" height="228" fill="#001F3F" />
+  
+  <!-- Bars for Engagement Score -->
+  <rect x="185" y="128" width="40" height="272" fill="#0074D9" />
+  <rect x="335" y="156" width="40" height="244" fill="#0074D9" />
+  <rect x="485" y="140" width="40" height="260" fill="#0074D9" />
+  <rect x="635" y="172" width="40" height="228" fill="#0074D9" />
+  
+  <!-- Bars for Conversion Potential -->
+  <rect x="140" y="95" width="40" height="305" fill="#7FDBFF" opacity="0.7" />
+  <rect x="290" y="140" width="40" height="260" fill="#7FDBFF" opacity="0.7" />
+  <rect x="440" y="116" width="40" height="284" fill="#7FDBFF" opacity="0.7" />
+  <rect x="590" y="156" width="40" height="244" fill="#7FDBFF" opacity="0.7" />
+  
+  <!-- Bars for Brand Alignment -->
+  <rect x="185" y="132" width="40" height="268" fill="#B10DC9" opacity="0.7" />
+  <rect x="335" y="164" width="40" height="236" fill="#B10DC9" opacity="0.7" />
+  <rect x="485" y="140" width="40" height="260" fill="#B10DC9" opacity="0.7" />
+  <rect x="635" y="180" width="40" height="220" fill="#B10DC9" opacity="0.7" />
+  
+  <!-- Score labels -->
+  <text x="160" y="110" font-family="Arial" font-size="12" text-anchor="middle" fill="white">8.8</text>
+  <text x="310" y="142" font-family="Arial" font-size="12" text-anchor="middle" fill="white">7.9</text>
+  <text x="460" y="118" font-family="Arial" font-size="12" text-anchor="middle" fill="white">8.6</text>
+  <text x="610" y="166" font-family="Arial" font-size="12" text-anchor="middle" fill="white">7.1</text>
+  
+  <!-- Legend -->
+  <rect x="600" y="60" width="150" height="100" fill="white" stroke="#ddd" />
+  <rect x="610" y="75" width="20" height="12" fill="#001F3F" />
+  <text x="640" y="85" font-family="Arial" font-size="12">Overall Score</text>
+  
+  <rect x="610" y="95" width="20" height="12" fill="#0074D9" />
+  <text x="640" y="105" font-family="Arial" font-size="12">Engagement</text>
+  
+  <rect x="610" y="115" width="20" height="12" fill="#7FDBFF" opacity="0.7" />
+  <text x="640" y="125" font-family="Arial" font-size="12">Conversion</text>
+  
+  <rect x="610" y="135" width="20" height="12" fill="#B10DC9" opacity="0.7" />
+  <text x="640" y="145" font-family="Arial" font-size="12">Brand Alignment</text>
+  
+  <!-- "Best Model" indication -->
+  <polygon points="160,70 175,50 190,70" fill="gold" stroke="#FFD700" stroke-width="1"/>
+  <text x="175" y="45" font-family="Arial" font-size="12" text-anchor="middle" font-weight="bold">
+    Best Model
+  </text>
+</svg>
+</div>
+
+The evaluation system assesses email outputs along four key dimensions:
+- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, readability
+- **Brand Alignment**: Tone, language clarity, brand personality, distinctiveness
+- **Personalization**: Name usage, tariff relevance, specific needs, tailored benefits
+- **CTA Effectiveness**: Clarity, prominence, persuasiveness, urgency, value proposition
+
+These dimensions are combined into aggregate metrics:
+- **Engagement Score**: How likely the email is to be read and engaged with
+- **Conversion Potential**: How effectively it drives action
+- **Brand Alignment Score**: How well it matches Octopus Energy's voice
+- **Overall Score**: Weighted combination of all metrics
+
+```python
+def calculate_overall_score(evaluation_results):
+    """Calculate an overall quality score based on multiple dimensions"""
+    engagement_score = evaluation_results.get("engagement_score", 5.0)
+    conversion_potential = evaluation_results.get("conversion_potential", 5.0)
+    brand_alignment_score = evaluation_results.get("brand_alignment_score", 5.0)
+    
+    # Weighted score calculation
+    overall_score = (
+        engagement_score * 0.3 +
+        conversion_potential * 0.4 +
+        brand_alignment_score * 0.3
+    )
+    
+    return round(overall_score, 1)
 ```
 
 ## Project Structure
@@ -294,5 +422,3 @@ This implementation demonstrates several strengths relevant to a prompt engineer
 3. **Prompt Versioning**: Clear system for tracking prompt iterations and improvements
 4. **Brand Voice Integration**: Techniques for ensuring AI outputs match specific brand guidelines
 5. **LangChain Expertise**: Leveraging LangChain for complex multi-stage workflows
-
-This project showcases my approach to prompt engineering as a systematic discipline requiring careful design, testing, evaluation, and refinement.
