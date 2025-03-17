@@ -1,189 +1,256 @@
 # Octopus Energy Marketing Email Assistant
 
-A LangChain-powered intelligent assistant that helps marketers create personalized email campaigns for Octopus Energy customers.
+## Project Overview
 
-## Overview
+A demonstration project showcasing a prompt engineering approach for creating personalized marketing emails using LangChain and LLMs.
 
-This project showcases a complete implementation of a prompt engineering system for generating marketing emails using LangChain, with a focus on prompt curation, model evaluation, and workflow orchestration. The system is designed to help marketers at Octopus Energy create highly personalized and effective email campaigns.
+![Email Generation Workflow](https://mermaid.ink/svg/pako:eNp1kk1OwzAQha8yaheVCLIpK27QDULqhgOwcOJpYuHYkT0pFOXuOD9tURHZ5c37Zt7T2B6UdgQFD13r0FjCe0I_WGLTWb8JK5_ZDcl5cIyFiKZhaYnE1qNiPfJmOmUYbUiyaTTAZy8GJnR86DgJPDWUZTsvWPHJCzVmYYEiY2J_bBVLvR7YE0FpPDsLZ5EKKiLAGWu_bkr0wkRK4lZ15Q-BpR4F5kLZQ3-6E-YsVE-VDvvp22eFvNS-mMD6WsHyoqxWq6ouuBW3b4-TDYt1hWrMFXQNVdchx2aMtLzA-uZOiTtReGlgN0w3hFFFiQWGX06ZKB2v_8aNZNlx4JN1Mf67QjbSmFQu2-yIBqpQoOFR7xQYvLnb9bom6ksrD7hvvd6oZkrBOo74Sd9VcNRKB3wPJQYVP6fDswuoGZJVPQYFr1j0a_iY4KBgr0L2qqJgpw8vdWP9Hgr_AWKawWg)
 
-## Key Features
+## Project Goals
 
-- **Multi-stage Email Generation**: Uses a sequential workflow with customer analysis, draft generation, and refinement stages
-- **Advanced Prompt Engineering**: Systematically designed prompts with versioning, A/B testing, and prompt templates
-- **Comprehensive Model Evaluation**: Evaluates email outputs on content quality, brand alignment, personalization, and CTA effectiveness
-- **Model Comparison Framework**: Tests different LLMs to identify the best performer for email marketing
-- **Simple Web Interface**: Provides a user-friendly interface for marketers to generate emails and chat with the assistant
+This project demonstrates my approach to prompt engineering for generating marketing emails at Octopus Energy. It specifically addresses:
 
-## Architectural Design
+1. **Orchestration Workflow**: How I designed a multi-stage process for email generation
+2. **Model Evaluation**: How I systematically assessed LLMs for this task
+3. **Prompt Curation**: How I crafted and iterated on prompts to achieve optimal results
 
-### Orchestration Workflow
+## Orchestration Workflow
 
-The email generation process follows a carefully orchestrated workflow:
+I designed a three-stage workflow to break down the complex email generation task:
 
-1. **Customer Data Analysis**: The system analyzes customer data (usage patterns, location, tariff, etc.) to generate personalized insights.
-2. **Email Draft Generation**: Using these insights, it creates a personalized email draft tailored to the customer's specific situation.
-3. **Email Refinement**: The draft is optimized for clarity, engagement, and conversion potential.
-
-This workflow is implemented as a LangChain sequential chain with memory, allowing each stage to build upon the previous ones.
-
-### Prompt Engineering Approach
-
-The project demonstrates advanced prompt engineering techniques:
-
-- **System Prompts**: Define the overall context, role, and constraints for the LLM
-- **Template Variations**: Multiple versions of each prompt template for systematic testing
-- **Structured Outputs**: Clear formatting guidelines to ensure consistent email structure
-- **A/B Testing Framework**: Tests different subject lines and CTAs to optimize performance
-- **Brand Voice Integration**: Embeds Octopus Energy's specific tone and style guidelines
-
-### Model Evaluation Framework
-
-A comprehensive evaluation system assesses the quality of generated emails:
-
-- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, and readability
-- **Brand Alignment**: How well the email matches Octopus Energy's brand voice
-- **Personalization**: Effective use of customer data to create a tailored message
-- **CTA Effectiveness**: Clarity, prominence, persuasiveness, and value proposition of the call-to-action
-- **Aggregate Metrics**: Engagement score, conversion potential, and overall quality
-
-### LangSmith Integration
-
-The project leverages LangSmith for:
-- Tracing and debugging the email generation workflow
-- Logging and analyzing prompt performances
-- Running systematic evaluations of different models
-- Monitoring production performance
-
-## Technology Stack
-
-- **LangChain**: For orchestrating the entire email generation workflow
-- **LangSmith**: For evaluation, tracing, and model comparison
-- **Multiple LLMs**: OpenAI GPT-4, Anthropic Claude, AWS Bedrock models
-- **Flask**: For the web interface
-- **Pydantic**: For data validation and schema definition
-
-## Installation and Setup
-
-1. Clone the repository:
-```
-git clone https://github.com/yourusername/octopus-email-assistant.git
-cd octopus-email-assistant
-```
-
-2. Install dependencies:
-```
-pip install -r requirements.txt
-```
-
-3. Set up environment variables:
-```
-cp .env.example .env
-```
-Edit the `.env` file to add your API keys and configuration.
-
-4. Run the application:
-```
-python app.py
-```
-
-5. Open your browser and navigate to:
-```
-http://localhost:5000
-```
-
-## Project Highlights for Prompt Engineering Role
-
-This project specifically demonstrates the skills required for the Prompt Engineer role at Octopus Energy:
-
-### Prompt Crafting and Maintenance
-
-- Systematic approach to prompt development with versioning
-- Template variations for A/B testing
-- Clear structure with specific instructions for model outputs
-- Brand voice integration within prompts
-
-### Test Prompts and Evaluation
-
-- Comprehensive evaluation framework for email quality
-- Systematic testing of different prompt variations
-- Metrics for measuring effectiveness and brand alignment
-- LangSmith integration for prompt tracking and performance analysis
-
-### Safeguards and Quality Control
-
-- Input validation and sanitization
-- Error handling for edge cases
-- Constraints to ensure output quality and brand alignment
-- Monitoring system to detect problematic outputs
-
-### Prompt Optimization
-
-- Iterative refinement based on evaluation results
-- A/B testing of different prompt structures
-- Performance tracking through LangSmith
-- Automated selection of the best-performing model and prompt combinations
-
-## Usage Examples
-
-### Generating an Email Campaign
+1. **Analysis Stage**: The LLM analyzes customer data (usage patterns, location, tariff) to generate personalized insights
+2. **Generation Stage**: Using these insights, it creates a personalized email draft
+3. **Refinement Stage**: The draft is optimized for clarity, engagement, and conversion potential
 
 ```python
-from orchestration.workflow import EmailCampaignWorkflow
-from schemas.customer import CustomerProfile
-
-# Create a customer profile
-customer = CustomerProfile(
-    customer_id="C1234",
-    name="John Smith",
-    tariff_type="Standard Variable",
-    energy_usage=320,
-    potential_savings=15,
-    recommended_plan="GreenFlex",
-    location="London",
-    peak_usage_time="Evening",
-    history_summary="Customer for 3 years, previously inquired about solar panels"
-)
-
-# Initialize the workflow
-workflow = EmailCampaignWorkflow(model_name="gpt-4")
-
-# Generate the campaign
-campaign = workflow.generate_campaign(customer)
-
-# Print the generated email
-print(f"Subject: {campaign.email_subject}\n\n{campaign.email_body}")
+def generate_campaign(customer_profile):
+    # Stage 1: Analyze customer data
+    customer_insights = analysis_chain.invoke({
+        "customer_name": customer_profile.name,
+        "tariff_type": customer_profile.tariff_type,
+        "energy_usage": customer_profile.energy_usage,
+        "location": customer_profile.location,
+        "peak_usage_time": customer_profile.peak_usage_time,
+        "customer_history": customer_profile.history_summary
+    })
+    
+    # Stage 2: Generate email draft
+    email_draft = generation_chain.invoke({
+        **customer_profile.dict(),
+        "customer_insights": customer_insights["customer_insights"]
+    })
+    
+    # Stage 3: Refine and optimize email
+    final_email = refinement_chain.invoke({
+        "email_draft": email_draft["email_draft"],
+        "customer_name": customer_profile.name,
+        "tariff_type": customer_profile.tariff_type
+    })
+    
+    return EmailCampaign(
+        customer_id=customer_profile.customer_id,
+        email_subject=extract_subject(final_email["final_email"]),
+        email_body=final_email["final_email"],
+        customer_insights=customer_insights["customer_insights"],
+        draft_version=email_draft["email_draft"],
+        final_version=final_email["final_email"]
+    )
 ```
 
-### Using the Marketing Assistant Agent
+This modular approach provides several advantages:
+- Each stage can be optimized independently
+- The system can trace and evaluate performance at each step
+- Complex reasoning is broken into manageable chunks for the LLM
+
+## Model Evaluation Framework
+
+I developed a comprehensive evaluation framework to assess LLM performance:
+
+![Model Comparison](https://raw.githubusercontent.com/username/octopus-email-assistant/main/static/model_comparison.png)
+
+The evaluation system assesses email outputs along four key dimensions:
+- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, readability
+- **Brand Alignment**: Tone, language clarity, brand personality, distinctiveness
+- **Personalization**: Name usage, tariff relevance, specific needs, tailored benefits
+- **CTA Effectiveness**: Clarity, prominence, persuasiveness, urgency, value proposition
+
+These dimensions are combined into aggregate metrics:
+- **Engagement Score**: How likely the email is to be read and engaged with
+- **Conversion Potential**: How effectively it drives action
+- **Brand Alignment Score**: How well it matches Octopus Energy's voice
+- **Overall Score**: Weighted combination of all metrics
 
 ```python
-from orchestration.agent import MarketingEmailAgent
-
-# Initialize the agent
-agent = MarketingEmailAgent(model_name="claude-3-opus")
-
-# Chat with the agent
-response = agent.run("I need to create a seasonal winter campaign for customers on the Economy 7 tariff who use electric heating. What would you recommend?")
-
-print(response)
+def calculate_overall_score(evaluation_results):
+    """Calculate an overall quality score based on multiple dimensions"""
+    engagement_score = evaluation_results.get("engagement_score", 5.0)
+    conversion_potential = evaluation_results.get("conversion_potential", 5.0)
+    brand_alignment_score = evaluation_results.get("brand_alignment_score", 5.0)
+    
+    # Weighted score calculation
+    overall_score = (
+        engagement_score * 0.3 +
+        conversion_potential * 0.4 +
+        brand_alignment_score * 0.3
+    )
+    
+    return round(overall_score, 1)
 ```
 
-## Why This Project Demonstrates Prompt Engineering Excellence
+## Prompt Curation Methodology
 
-This project showcases the skills needed for a prompt engineering role in several ways:
+My prompt development process followed a systematic approach:
 
-1. **Systematic Prompt Development**: Rather than ad-hoc prompts, it demonstrates a structured approach to creating, testing, and refining prompts.
+![Prompt Engineering Workflow](https://mermaid.ink/svg/pako:eNptksFqwzAMhl_F-NSBmz1gtzWww1gvO-0BgoliL4vFNlbsjFK6d5-cZmOF6SL0S_r1C-l0ROMIKnrIFXZoIySE1E2YYqmDfUSXa-IgmvnEGCsRZc-aEnFKqNlc-QNfTx2a3ij2hjU_CXYPjbYm2o1kG4ItZ24kCgUltGw8XnO0UoU7EswxJA_B4ZGCCrG1UrgwNhZuozC12PDOAZ9oPbJiCf0MWcm5Jb7ydYbPCZWJcvW2gOXvwF6cPnD-R-6fvKY-5OcmMZc5uUyQQ7kWrwLvWVrp4JUiQnORh2TiLOPJcRZEu-iW-XdG5NDMCOUeXX8HqhTMBZVvdNdAdVSxQ0tJ_0CRoLi7h4JXFOXe6zqHisre1PJR_QBc9I5j)
 
-2. **Evaluation Framework**: It includes comprehensive metrics to measure prompt effectiveness and output quality.
+### 1. System Prompts as Foundation
+I started with carefully crafted system prompts that:
+- Define the AI's role as an expert email marketing assistant
+- Establish Octopus Energy's brand voice and constraints
+- Set quality expectations
 
-3. **Orchestration Understanding**: Shows how to chain prompts together effectively in a multi-stage workflow.
+```
+You are an Expert Email Marketing Assistant for Octopus Energy, specializing in personalized
+energy marketing campaigns. You have years of experience in crafting engaging, persuasive
+energy-focused emails that drive conversions while maintaining Octopus Energy's friendly,
+customer-centric brand voice.
+```
 
-4. **Brand Alignment**: Demonstrates how to ensure outputs match a specific brand voice and style.
+### 2. Structured Prompt Templates
+Each task has a dedicated prompt template with:
+- Clear task definition
+- Specific input format
+- Step-by-step process guidelines
+- Concrete output requirements
+- Constraints and quality standards
 
-5. **Model Comparison**: Provides a framework for testing different LLMs to select the best performer.
+### 3. Prompt Versioning
+I implemented multiple versions of each prompt to enable systematic testing:
 
-6. **Practical Application**: The system solves a real business need (personalized email marketing) with tangible value.
+**Analysis Prompt Evolution:**
+```
+# Version 1 (Basic)
+Analyze the following customer data and provide insights for email personalization:
+Customer: {customer_name}
+Tariff: {tariff_type}
+Usage: {energy_usage} kWh
+Location: {location}
 
-7. **Technical Implementation**: Shows not just prompt theory but practical implementation in a complete system.
+Provide 3 key insights about this customer's energy usage patterns.
 
-This project would give the interviewer a clear demonstration of how you approach prompt engineering in a systematic, results-driven way.
+# Version 3 (Advanced)
+## CUSTOMER ANALYSIS TASK
+
+Thoroughly analyze this Octopus Energy customer:
+* Customer: {customer_name}
+* Current Plan: {tariff_type}
+* Monthly Usage: {energy_usage} kWh
+* Location: {location}
+* Usage Peak: {peak_usage_time}
+* History: {customer_history}
+
+First, identify usage patterns.
+Second, compare to similar customers.
+Third, calculate potential savings opportunities.
+Finally, recommend specific messaging angles.
+
+Your analysis should be data-driven and actionable.
+```
+
+### 4. A/B Testing Framework
+The implementation includes frameworks for testing variations in:
+- **Subject Line Styles**: Savings-focused, question-based, eco-focused, etc.
+- **CTA Variations**: Action-oriented, benefit-focused, low-commitment, etc.
+- **Structure**: Various email formats and content organization
+
+```python
+# A/B testing variants for email subject lines
+SUBJECT_LINE_VARIANTS = {
+    "savings_focused": "{customer_name}, Save {potential_savings}% on Your Energy Bills This Month",
+    "question_based": "Are You Overpaying for Energy, {customer_name}?",
+    "eco_focused": "Power Your Home with 100% Green Energy & Save {potential_savings}%",
+    "urgency_based": "Last Chance: Switch & Save {potential_savings}% Before Prices Change",
+    "benefit_focused": "More Control, Lower Bills: A Special Offer for {customer_name}"
+}
+```
+
+## Project Structure
+
+```
+octopus-email-assistant/
+├── orchestration/
+│   ├── workflow.py      # Multi-stage email generation workflow
+│   ├── chains.py        # LangChain components for each stage
+│   └── agent.py         # Marketing assistant agent
+├── prompts/
+│   ├── system_prompts.py    # Foundational role definitions
+│   ├── email_templates.py   # Main prompt templates
+│   └── base_templates.py    # Versioned template variations
+├── evaluation/
+│   ├── evaluators.py    # LLM output evaluation framework
+│   ├── metrics.py       # Scoring functions
+│   └── test_cases.py    # Systematic model testing
+└── schemas/
+    └── customer.py      # Data validation schemas
+```
+
+## Sample Output
+
+**Customer Insights:**
+```
+Based on the customer data analysis, here are the key insights:
+
+1. This customer has higher than average energy usage during evening hours (7pm-11pm),
+   suggesting they might benefit from an Economy 7 tariff or time-of-use optimization.
+
+2. Their location in London indicates they're in an area with high adoption of smart
+   home technology and environmental consciousness.
+
+3. Their current Standard Variable tariff is not optimized for their usage patterns,
+   which show consistency month-to-month.
+
+4. Given their energy consumption and current tariff, there's potential for 12-15%
+   savings by switching to the GreenFlex plan.
+
+5. Customer history shows interest in renewable energy options but concern about
+   initial costs - messaging should emphasize immediate savings alongside
+   environmental benefits.
+```
+
+**Generated Email:**
+```
+Subject: Alex, Cut Your Evening Energy Costs by 15% This Month
+
+Hi Alex,
+
+Looking at your recent energy usage, I noticed you're using most power during
+evenings on your Standard Variable tariff. This presents a perfect opportunity!
+
+Switch to our GreenFlex plan and save 15% on your monthly bills – that's around
+£180 over the next year based on your 350 kWh monthly usage. Plus, you'll be
+powering your home with 100% renewable electricity.
+
+Perfect for your lifestyle:
+• Lower rates during your actual usage hours
+• Real-time consumption tracking in our simple app
+• 100% green energy without the premium price
+• No contract lock-in – flexibility guaranteed
+
+Take 2 minutes to switch now and start saving immediately.
+
+[See Your Exact Savings]
+
+The Octopus Energy Team
+```
+
+## Key Advantages
+
+This implementation demonstrates several strengths relevant to a prompt engineering role:
+
+1. **Systematic Methodology**: A structured approach to prompt development rather than ad-hoc solutions
+2. **Evaluation Framework**: Comprehensive metrics for measuring prompt effectiveness
+3. **Prompt Versioning**: Clear system for tracking prompt iterations and improvements
+4. **Brand Voice Integration**: Techniques for ensuring AI outputs match specific brand guidelines
+5. **LangChain Expertise**: Leveraging LangChain for complex multi-stage workflows
+
+This project showcases my approach to prompt engineering as a systematic discipline requiring careful design, testing, evaluation, and refinement.
