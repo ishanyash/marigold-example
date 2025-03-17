@@ -4,7 +4,30 @@
 
 A demonstration project showcasing a prompt engineering approach for creating personalized marketing emails using LangChain and LLMs.
 
-![Email Generation Workflow](https://mermaid.ink/svg/pako:eNp1kk1OwzAQha8yaheVCLIpK27QDULqhgOwcOJpYuHYkT0pFOXuOD9tURHZ5c37Zt7T2B6UdgQFD13r0FjCe0I_WGLTWb8JK5_ZDcl5cIyFiKZhaYnE1qNiPfJmOmUYbUiyaTTAZy8GJnR86DgJPDWUZTsvWPHJCzVmYYEiY2J_bBVLvR7YE0FpPDsLZ5EKKiLAGWu_bkr0wkRK4lZ15Q-BpR4F5kLZQ3-6E-YsVE-VDvvp22eFvNS-mMD6WsHyoqxWq6ouuBW3b4-TDYt1hWrMFXQNVdchx2aMtLzA-uZOiTtReGlgN0w3hFFFiQWGX06ZKB2v_8aNZNlx4JN1Mf67QjbSmFQu2-yIBqpQoOFR7xQYvLnb9bom6ksrD7hvvd6oZkrBOo74Sd9VcNRKB3wPJQYVP6fDswuoGZJVPQYFr1j0a_iY4KBgr0L2qqJgpw8vdWP9Hgr_AWKawWg)
+![Email Generation Workflow](
+    graph TD
+    A[Customer Profile Data] --> B[Stage 1: Analysis]
+    B --> C[Customer Insights]
+    C --> D[Stage 2: Email Generation]
+    D --> E[Email Draft]
+    E --> F[Stage 3: Refinement]
+    F --> G[Final Email]
+    
+    subgraph "Analysis Stage"
+    B
+    end
+    
+    subgraph "Generation Stage"
+    D
+    end
+    
+    subgraph "Refinement Stage"
+    F
+    end
+    
+    style B fill:#4c12a1,color:white
+    style D fill:#4c12a1,color:white
+    style F fill:#4c12a1,color:white)
 
 ## Project Goals
 
@@ -101,7 +124,26 @@ def calculate_overall_score(evaluation_results):
 
 My prompt development process followed a systematic approach:
 
-![Prompt Engineering Workflow](https://mermaid.ink/svg/pako:eNptksFqwzAMhl_F-NSBmz1gtzWww1gvO-0BgoliL4vFNlbsjFK6d5-cZmOF6SL0S_r1C-l0ROMIKnrIFXZoIySE1E2YYqmDfUSXa-IgmvnEGCsRZc-aEnFKqNlc-QNfTx2a3ij2hjU_CXYPjbYm2o1kG4ItZ24kCgUltGw8XnO0UoU7EswxJA_B4ZGCCrG1UrgwNhZuozC12PDOAZ9oPbJiCf0MWcm5Jb7ydYbPCZWJcvW2gOXvwF6cPnD-R-6fvKY-5OcmMZc5uUyQQ7kWrwLvWVrp4JUiQnORh2TiLOPJcRZEu-iW-XdG5NDMCOUeXX8HqhTMBZVvdNdAdVSxQ0tJ_0CRoLi7h4JXFOXe6zqHisre1PJR_QBc9I5j)
+![Prompt Engineering Workflow](
+    graph TD
+    A[Research Brand Voice] --> B[Design Initial Prompts]
+    B --> C[Create Prompt Variations]
+    C --> D[Test on Sample Data]
+    D --> E[Evaluate Outputs]
+    E --> F{Meets Quality Standards?}
+    F -->|No| G[Refine Prompts]
+    G --> C
+    F -->|Yes| H[Release to Production]
+    H --> I[Monitor Performance]
+    I --> J{Need Improvement?}
+    J -->|Yes| G
+    J -->|No| I
+    
+    style B fill:#4c12a1,color:white
+    style E fill:#4c12a1,color:white
+    style G fill:#4c12a1,color:white
+    style I fill:#4c12a1,color:white
+)
 
 ### 1. System Prompts as Foundation
 I started with carefully crafted system prompts that:
