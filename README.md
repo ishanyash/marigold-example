@@ -86,6 +86,50 @@ This modular approach provides several advantages:
 - The system can trace and evaluate performance at each step
 - Complex reasoning is broken into manageable chunks for the LLM
 
+## Model Evaluation Framework
+
+I developed a comprehensive evaluation framework to assess LLM performance:
+
+![Model Comparison](static/model_comparison.svg)
+
+### Model Performance Summary
+
+| Model | Overall Score | Engagement | Conversion | Brand Alignment |
+|-------|--------------|------------|------------|-----------------|
+| mock-gpt-4 | 8.8 | 8.5 | 9.2 | 8.5 |
+| mock-gpt-3.5 | 7.9 | 8.0 | 8.2 | 7.6 |
+| mock-claude-3 | 8.6 | 8.3 | 8.9 | 8.5 |
+| mock-bedrock | 7.1 | 7.2 | 7.8 | 6.9 |
+
+The evaluation system assesses email outputs along four key dimensions:
+- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, readability
+- **Brand Alignment**: Tone, language clarity, brand personality, distinctiveness
+- **Personalization**: Name usage, tariff relevance, specific needs, tailored benefits
+- **CTA Effectiveness**: Clarity, prominence, persuasiveness, urgency, value proposition
+
+These dimensions are combined into aggregate metrics:
+- **Engagement Score**: How likely the email is to be read and engaged with
+- **Conversion Potential**: How effectively it drives action
+- **Brand Alignment Score**: How well it matches Octopus Energy's voice
+- **Overall Score**: Weighted combination of all metrics
+
+```python
+def calculate_overall_score(evaluation_results):
+    """Calculate an overall quality score based on multiple dimensions"""
+    engagement_score = evaluation_results.get("engagement_score", 5.0)
+    conversion_potential = evaluation_results.get("conversion_potential", 5.0)
+    brand_alignment_score = evaluation_results.get("brand_alignment_score", 5.0)
+    
+    # Weighted score calculation
+    overall_score = (
+        engagement_score * 0.3 +
+        conversion_potential * 0.4 +
+        brand_alignment_score * 0.3
+    )
+    
+    return round(overall_score, 1)
+```
+
 ## Prompt Curation Methodology
 
 My prompt development process followed a systematic approach:
@@ -215,135 +259,6 @@ SUBJECT_LINE_VARIANTS = {
 }
 ```
 
-## Model Evaluation Framework
-
-I developed a comprehensive evaluation framework to assess LLM performance:
-
-<div align="center">
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <!-- Background -->
-  <rect width="800" height="500" fill="#f8f9fa" />
-  
-  <!-- Title -->
-  <text x="400" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">
-    LLM Performance Comparison for Email Generation
-  </text>
-  
-  <!-- Y-axis -->
-  <line x1="100" y1="80" x2="100" y2="400" stroke="black" stroke-width="2" />
-  <text x="50" y="240" font-family="Arial" font-size="16" text-anchor="middle" transform="rotate(-90, 50, 240)">
-    Score (0-10)
-  </text>
-  
-  <!-- Y-axis labels -->
-  <text x="90" y="400" font-family="Arial" font-size="14" text-anchor="end">0</text>
-  <text x="90" y="336" font-family="Arial" font-size="14" text-anchor="end">2</text>
-  <text x="90" y="272" font-family="Arial" font-size="14" text-anchor="end">4</text>
-  <text x="90" y="208" font-family="Arial" font-size="14" text-anchor="end">6</text>
-  <text x="90" y="144" font-family="Arial" font-size="14" text-anchor="end">8</text>
-  <text x="90" y="80" font-family="Arial" font-size="14" text-anchor="end">10</text>
-  
-  <!-- Horizontal grid lines -->
-  <line x1="100" y1="400" x2="750" y2="400" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  <line x1="100" y1="336" x2="750" y2="336" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  <line x1="100" y1="272" x2="750" y2="272" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  <line x1="100" y1="208" x2="750" y2="208" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  <line x1="100" y1="144" x2="750" y2="144" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  <line x1="100" y1="80" x2="750" y2="80" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5" />
-  
-  <!-- X-axis -->
-  <line x1="100" y1="400" x2="750" y2="400" stroke="black" stroke-width="2" />
-  <text x="425" y="440" font-family="Arial" font-size="16" text-anchor="middle">
-    Model
-  </text>
-  
-  <!-- X-axis labels (models) -->
-  <text x="175" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-gpt-4</text>
-  <text x="325" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-gpt-3.5</text>
-  <text x="475" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-claude-3</text>
-  <text x="625" y="420" font-family="Arial" font-size="14" text-anchor="middle">mock-bedrock</text>
-  
-  <!-- Bars for Overall Score -->
-  <rect x="140" y="116" width="40" height="284" fill="#001F3F" />
-  <rect x="290" y="148" width="40" height="252" fill="#001F3F" />
-  <rect x="440" y="124" width="40" height="276" fill="#001F3F" />
-  <rect x="590" y="172" width="40" height="228" fill="#001F3F" />
-  
-  <!-- Bars for Engagement Score -->
-  <rect x="185" y="128" width="40" height="272" fill="#0074D9" />
-  <rect x="335" y="156" width="40" height="244" fill="#0074D9" />
-  <rect x="485" y="140" width="40" height="260" fill="#0074D9" />
-  <rect x="635" y="172" width="40" height="228" fill="#0074D9" />
-  
-  <!-- Bars for Conversion Potential -->
-  <rect x="140" y="95" width="40" height="305" fill="#7FDBFF" opacity="0.7" />
-  <rect x="290" y="140" width="40" height="260" fill="#7FDBFF" opacity="0.7" />
-  <rect x="440" y="116" width="40" height="284" fill="#7FDBFF" opacity="0.7" />
-  <rect x="590" y="156" width="40" height="244" fill="#7FDBFF" opacity="0.7" />
-  
-  <!-- Bars for Brand Alignment -->
-  <rect x="185" y="132" width="40" height="268" fill="#B10DC9" opacity="0.7" />
-  <rect x="335" y="164" width="40" height="236" fill="#B10DC9" opacity="0.7" />
-  <rect x="485" y="140" width="40" height="260" fill="#B10DC9" opacity="0.7" />
-  <rect x="635" y="180" width="40" height="220" fill="#B10DC9" opacity="0.7" />
-  
-  <!-- Score labels -->
-  <text x="160" y="110" font-family="Arial" font-size="12" text-anchor="middle" fill="white">8.8</text>
-  <text x="310" y="142" font-family="Arial" font-size="12" text-anchor="middle" fill="white">7.9</text>
-  <text x="460" y="118" font-family="Arial" font-size="12" text-anchor="middle" fill="white">8.6</text>
-  <text x="610" y="166" font-family="Arial" font-size="12" text-anchor="middle" fill="white">7.1</text>
-  
-  <!-- Legend -->
-  <rect x="600" y="60" width="150" height="100" fill="white" stroke="#ddd" />
-  <rect x="610" y="75" width="20" height="12" fill="#001F3F" />
-  <text x="640" y="85" font-family="Arial" font-size="12">Overall Score</text>
-  
-  <rect x="610" y="95" width="20" height="12" fill="#0074D9" />
-  <text x="640" y="105" font-family="Arial" font-size="12">Engagement</text>
-  
-  <rect x="610" y="115" width="20" height="12" fill="#7FDBFF" opacity="0.7" />
-  <text x="640" y="125" font-family="Arial" font-size="12">Conversion</text>
-  
-  <rect x="610" y="135" width="20" height="12" fill="#B10DC9" opacity="0.7" />
-  <text x="640" y="145" font-family="Arial" font-size="12">Brand Alignment</text>
-  
-  <!-- "Best Model" indication -->
-  <polygon points="160,70 175,50 190,70" fill="gold" stroke="#FFD700" stroke-width="1"/>
-  <text x="175" y="45" font-family="Arial" font-size="12" text-anchor="middle" font-weight="bold">
-    Best Model
-  </text>
-</svg>
-</div>
-
-The evaluation system assesses email outputs along four key dimensions:
-- **Content Quality**: Clarity, conciseness, grammar, persuasiveness, readability
-- **Brand Alignment**: Tone, language clarity, brand personality, distinctiveness
-- **Personalization**: Name usage, tariff relevance, specific needs, tailored benefits
-- **CTA Effectiveness**: Clarity, prominence, persuasiveness, urgency, value proposition
-
-These dimensions are combined into aggregate metrics:
-- **Engagement Score**: How likely the email is to be read and engaged with
-- **Conversion Potential**: How effectively it drives action
-- **Brand Alignment Score**: How well it matches Octopus Energy's voice
-- **Overall Score**: Weighted combination of all metrics
-
-```python
-def calculate_overall_score(evaluation_results):
-    """Calculate an overall quality score based on multiple dimensions"""
-    engagement_score = evaluation_results.get("engagement_score", 5.0)
-    conversion_potential = evaluation_results.get("conversion_potential", 5.0)
-    brand_alignment_score = evaluation_results.get("brand_alignment_score", 5.0)
-    
-    # Weighted score calculation
-    overall_score = (
-        engagement_score * 0.3 +
-        conversion_potential * 0.4 +
-        brand_alignment_score * 0.3
-    )
-    
-    return round(overall_score, 1)
-```
-
 ## Project Structure
 
 ```
@@ -360,6 +275,8 @@ octopus-email-assistant/
 │   ├── evaluators.py    # LLM output evaluation framework
 │   ├── metrics.py       # Scoring functions
 │   └── test_cases.py    # Systematic model testing
+├── static/
+│   └── model_comparison.svg # Model performance visualization
 └── schemas/
     └── customer.py      # Data validation schemas
 ```
@@ -422,3 +339,196 @@ This implementation demonstrates several strengths relevant to a prompt engineer
 3. **Prompt Versioning**: Clear system for tracking prompt iterations and improvements
 4. **Brand Voice Integration**: Techniques for ensuring AI outputs match specific brand guidelines
 5. **LangChain Expertise**: Leveraging LangChain for complex multi-stage workflows
+
+## Core Code: Orchestration Workflow
+
+```python
+# orchestration/workflow.py
+
+from langchain.chains import LLMChain, SequentialChain
+from langchain.memory import ConversationBufferMemory
+from langchain_core.tracers import LangChainTracer
+from langchain.prompts import PromptTemplate
+import langsmith
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_community.chat_models import BedrockChat
+
+from config.settings import LANGSMITH_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY, AWS_REGION
+from prompts.email_templates import (
+    EMAIL_ANALYSIS_TEMPLATE,
+    EMAIL_GENERATION_TEMPLATE,
+    EMAIL_REFINEMENT_TEMPLATE
+)
+from schemas.customer import CustomerProfile
+from schemas.email import EmailCampaign
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+class EmailCampaignWorkflow:
+    """
+    Orchestrates the entire email campaign generation workflow using LangChain.
+    The workflow consists of three main stages:
+    1. Customer Data Analysis
+    2. Email Draft Generation
+    3. Email Refinement and Optimization
+    """
+    
+    def __init__(self, model_name="gpt-4", trace_name="octopus-email-campaign"):
+        self.trace_name = trace_name
+        self.model_name = model_name
+        self.tracer = LangChainTracer(project_name=trace_name)
+        
+        # Initialize the appropriate LLM based on model_name
+        self.llm = self._initialize_llm(model_name)
+        
+        # Set up conversation memory
+        self.memory = ConversationBufferMemory(return_messages=True)
+        
+        # Build the individual chains
+        self.analysis_chain = self._build_analysis_chain()
+        self.generation_chain = self._build_generation_chain()
+        self.refinement_chain = self._build_refinement_chain()
+        
+        # Build the sequential workflow
+        self.workflow = self._build_workflow()
+    
+    def _initialize_llm(self, model_name):
+        """Initialize the appropriate LLM based on model name"""
+        if model_name.startswith("gpt"):
+            return ChatOpenAI(
+                model_name=model_name,
+                temperature=0.7,
+                openai_api_key=OPENAI_API_KEY
+            )
+        elif model_name.startswith("claude"):
+            return ChatAnthropic(
+                model=model_name,
+                temperature=0.7,
+                anthropic_api_key=ANTHROPIC_API_KEY
+            )
+        elif model_name.startswith("bedrock"):
+            # For AWS Bedrock models
+            model_id = model_name.split("-", 1)[1]  # Extract model ID after "bedrock-"
+            return BedrockChat(
+                model_id=model_id,
+                region_name=AWS_REGION,
+                model_kwargs={"temperature": 0.7}
+            )
+        else:
+            raise ValueError(f"Unsupported model: {model_name}")
+    
+    def _build_analysis_chain(self):
+        """Build the customer data analysis chain"""
+        analysis_prompt = PromptTemplate(
+            template=EMAIL_ANALYSIS_TEMPLATE,
+            input_variables=["customer_name", "tariff_type", "energy_usage", 
+                            "location", "peak_usage_time", "customer_history"]
+        )
+        
+        return LLMChain(
+            llm=self.llm,
+            prompt=analysis_prompt,
+            output_key="customer_insights",
+            verbose=True
+        )
+    
+    def _build_generation_chain(self):
+        """Build the email generation chain"""
+        generation_prompt = PromptTemplate(
+            template=EMAIL_GENERATION_TEMPLATE,
+            input_variables=["customer_name", "tariff_type", "energy_usage", 
+                           "potential_savings", "recommended_plan", 
+                           "location", "peak_usage_time", "customer_insights"]
+        )
+        
+        return LLMChain(
+            llm=self.llm,
+            prompt=generation_prompt,
+            output_key="email_draft",
+            verbose=True
+        )
+    
+    def _build_refinement_chain(self):
+        """Build the email refinement and optimization chain"""
+        refinement_prompt = PromptTemplate(
+            template=EMAIL_REFINEMENT_TEMPLATE,
+            input_variables=["email_draft", "customer_name", "tariff_type"]
+        )
+        
+        return LLMChain(
+            llm=self.llm,
+            prompt=refinement_prompt,
+            output_key="final_email",
+            verbose=True
+        )
+    
+    def _build_workflow(self):
+        """Build the complete sequential workflow"""
+        return SequentialChain(
+            chains=[self.analysis_chain, self.generation_chain, self.refinement_chain],
+            input_variables=["customer_name", "tariff_type", "energy_usage", 
+                           "potential_savings", "recommended_plan", 
+                           "location", "peak_usage_time", "customer_history"],
+            output_variables=["customer_insights", "email_draft", "final_email"],
+            verbose=True
+        )
+    
+    def generate_campaign(self, customer_profile: CustomerProfile) -> EmailCampaign:
+        """
+        Generate an email campaign for a specific customer
+        
+        Args:
+            customer_profile: Customer data including usage patterns
+            
+        Returns:
+            EmailCampaign object containing the generated campaign
+        """
+        try:
+            # Start tracing with LangSmith
+            with langsmith.trace(
+                project_name=self.trace_name,
+                tags=["production", f"model:{self.model_name}"]
+            ):
+                # Prepare inputs
+                inputs = {
+                    "customer_name": customer_profile.name,
+                    "tariff_type": customer_profile.tariff_type,
+                    "energy_usage": customer_profile.energy_usage,
+                    "potential_savings": customer_profile.potential_savings,
+                    "recommended_plan": customer_profile.recommended_plan,
+                    "location": customer_profile.location,
+                    "peak_usage_time": customer_profile.peak_usage_time,
+                    "customer_history": customer_profile.history_summary
+                }
+                
+                # Execute the workflow
+                logger.info(f"Generating campaign for customer: {customer_profile.name}")
+                results = self.workflow.invoke(inputs)
+                
+                # Create EmailCampaign object
+                campaign = EmailCampaign(
+                    customer_id=customer_profile.customer_id,
+                    email_subject=self._extract_subject(results["final_email"]),
+                    email_body=results["final_email"],
+                    customer_insights=results["customer_insights"],
+                    draft_version=results["email_draft"],
+                    final_version=results["final_email"],
+                    model_used=self.model_name
+                )
+                
+                return campaign
+                
+        except Exception as e:
+            logger.error(f"Error generating campaign: {str(e)}")
+            raise
+    
+    def _extract_subject(self, email_text):
+        """Extract the subject line from the generated email"""
+        if "Subject:" in email_text:
+            return email_text.split("Subject:")[1].split("\n")[0].strip()
+        return "Special Offer from Octopus Energy"  # Default subject
+```
+
+This project showcases my approach to prompt engineering as a systematic discipline requiring careful design, testing, evaluation, and refinement.
