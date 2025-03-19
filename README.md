@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A demonstration project showcasing a prompt engineering approach for creating personalized marketing emails using LangChain and LLMs. (All the data and figures are dummy figures, only for the same of representation)
+A demonstration project showcasing a prompt engineering approach for creating personalized marketing emails using LangChain and LLMs. (All the data and figures are dummy figures, only for the sake of representation)
 
 ```mermaid
 graph TD
@@ -89,7 +89,7 @@ This modular approach provides several advantages:
 ## Model Evaluation Framework
 
 I developed a comprehensive evaluation framework to assess LLM performance: 
-(All the data and figures are dummy figures, only for the same of representation)
+(All the data and figures are dummy figures, only for the sake of representation)
 
 ![Model Comparison](static/model_comparison.svg)
 
